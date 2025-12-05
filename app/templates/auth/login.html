@@ -5,8 +5,8 @@
 {% block content %}
 <div class="max-w-md mx-auto">
     <!-- Card de login -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-        <!-- Header con bandera -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+        <!-- Header -->
         <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-8">
             <div class="flex items-center justify-center mb-4">
                 <div class="flex mr-3">
@@ -14,57 +14,73 @@
                     <span class="flag-stripe blue"></span>
                     <span class="flag-stripe red"></span>
                 </div>
-                <h2 class="text-2xl font-bold">Iniciar Sesión</h2>
+                <h2 class="text-2xl font-bold">Acceso al Sistema</h2>
             </div>
-            <p class="text-primary-100 text-center">
-                Accede al sistema de gestión de nómina
+            <p class="text-primary-100 text-center text-sm">
+                Sistema profesional de gestión de nómina
             </p>
         </div>
 
         <!-- Formulario -->
         <div class="p-8">
-            <!-- Formulario simple (por ahora) -->
             <form method="POST" action="#" class="space-y-6">
                 <!-- Usuario -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
-                        👤 Usuario
+                        <span class="inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            Usuario o Email
+                        </span>
                     </label>
                     <input type="text" 
                            id="username" 
                            name="username"
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition"
-                           placeholder="admin">
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition placeholder-gray-400"
+                           placeholder="contador.juan">
                 </div>
 
                 <!-- Contraseña -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        🔒 Contraseña
+                        <span class="inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            Contraseña
+                        </span>
                     </label>
                     <input type="password" 
                            id="password" 
                            name="password"
                            required
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition placeholder-gray-400"
                            placeholder="••••••••">
+                    <div class="mt-1 text-right">
+                        <a href="#" class="text-sm text-primary-600 hover:text-primary-700">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Recordar -->
-                <div class="flex items-center">
-                    <input type="checkbox" 
-                           id="remember" 
-                           name="remember"
-                           class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                    <label for="remember" class="ml-2 block text-sm text-gray-700">
-                        Recordar mis datos
-                    </label>
+                <!-- Opciones -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" 
+                               id="remember" 
+                               name="remember"
+                               class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                        <label for="remember" class="ml-2 block text-sm text-gray-700">
+                            Mantener sesión activa
+                        </label>
+                    </div>
                 </div>
 
                 <!-- Botón de login -->
                 <button type="submit" 
-                        class="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-200 transform hover:-translate-y-0.5">
+                        class="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition duration-200 shadow-md hover:shadow-lg">
                     <div class="flex items-center justify-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
@@ -74,42 +90,46 @@
                 </button>
             </form>
 
-            <!-- Demo info -->
-            <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div class="flex items-start">
-                    <div class="text-blue-600 mr-3">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="text-sm font-medium text-blue-800">Credenciales de demostración:</div>
-                        <div class="mt-1">
-                            <div class="inline-block bg-white px-3 py-1 rounded border border-blue-300">
-                                <span class="font-mono text-sm">admin / admin123</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Separador -->
+            <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white text-gray-500">¿Primera vez en el sistema?</span>
                 </div>
             </div>
 
+            <!-- Crear cuenta -->
+            <div class="text-center">
+                <a href="#" 
+                   class="inline-flex items-center px-5 py-2.5 border-2 border-primary-600 text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                    Crear una cuenta nueva
+                </a>
+            </div>
+
             <!-- Volver al inicio -->
-            <div class="mt-6 text-center">
+            <div class="mt-8 pt-6 border-t border-gray-100 text-center">
                 <a href="/" 
-                   class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium">
+                   class="inline-flex items-center text-gray-600 hover:text-gray-800 text-sm">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
-                    Volver al inicio
+                    Volver a la página principal
                 </a>
             </div>
         </div>
 
         <!-- Footer -->
         <div class="px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <div class="text-center text-sm text-gray-500">
-                <span class="venezuela-flag"></span>
-                Sistema especializado para contadores venezolanos
+            <div class="text-center">
+                <div class="flex items-center justify-center mb-2">
+                    <span class="venezuela-flag"></span>
+                    <span class="text-sm font-medium text-gray-700">Sistema de Nómina</span>
+                </div>
             </div>
         </div>
     </div>

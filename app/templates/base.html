@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Nómina Venezuela{% endblock %}</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        venezuela: {
+                            yellow: '#FFCC00',
+                            blue: '#00247D',
+                            red: '#CF142B'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .venezuela-flag {
+            display: inline-block;
+            width: 20px;
+            height: 12px;
+            background: linear-gradient(to bottom, 
+                #CF142B 33%, 
+                #00247D 33%, #00247D 66%, 
+                #FFCC00 66%);
+            border-radius: 2px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .flag-stripe {
+            display: inline-block;
+            width: 5px;
+            height: 20px;
+            margin: 0 1px;
+        }
+        
+        .flag-stripe.yellow { background-color: #FFCC00; }
+        .flag-stripe.blue { background-color: #00247D; }
+        .flag-stripe.red { background-color: #CF142B; }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-primary-700 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="flex">
+                        <span class="flag-stripe yellow"></span>
+                        <span class="flag-stripe blue"></span>
+                        <span class="flag-stripe red"></span>
+                    </div>
+                    <a href="/" class="text-xl font-bold hover:text-primary-100 transition">
+                        Sistema Nómina
+                    </a>
+                </div>
+                
+                <!-- Menú -->
+                <div class="space-x-4">
+                    <a href="/" class="hover:text-primary-100 transition px-3 py-2 rounded">
+                        Inicio
+                    </a>
+                    <a href="/login" class="hover:text-primary-100 transition px-3 py-2 rounded">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Contenido principal -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-200 bg-white">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-gray-600">
+                <div class="mb-2">
+                    <span class="venezuela-flag"></span>
+                    <span class="font-medium">Sistema de Nómina</span>
+                </div>
+                <p class="text-sm">Sistema especializado para contadores</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

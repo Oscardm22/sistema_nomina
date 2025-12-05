@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema de Nómina{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Hero Section -->
+    <div class="text-center mb-12 py-8">
+        <div class="inline-flex items-center justify-center p-4 bg-primary-50 rounded-full mb-6">
+            <div class="flex mr-2">
+                <span class="flag-stripe yellow"></span>
+                <span class="flag-stripe blue"></span>
+                <span class="flag-stripe red"></span>
+            </div>
+            <span class="text-2xl">🏢</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Sistema de Nómina Venezuela
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            Gestión profesional especializada para contadores venezolanos
+        </p>
+        <div class="flex justify-center space-x-4">
+            <a href="/login" 
+               class="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition shadow-md">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                </svg>
+                Iniciar Sesión
+            </a>
+            <a href="#" 
+               class="inline-flex items-center px-6 py-3 border border-primary-600 text-primary-600 font-medium rounded-lg hover:bg-primary-50 transition">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+                Crear Cuenta
+            </a>
+        </div>
+    </div>
+
+    <!-- Sección: Para quién es este sistema -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-12 border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Diseñado para contadores profesionales
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-4">
+                    <span class="text-2xl">🏢</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Multiempresa</h3>
+                <p class="text-gray-600">
+                    Gestiona varias empresas desde una sola plataforma
+                </p>
+            </div>
+            
+            <div class="text-center p-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 text-green-600 rounded-full mb-4">
+                    <span class="text-2xl">💰</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Cálculos Automáticos</h3>
+                <p class="text-gray-600">
+                    Nómina, utilidades y prestaciones según ley venezolana
+                </p>
+            </div>
+            
+            <div class="text-center p-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-purple-100 text-purple-600 rounded-full mb-4">
+                    <span class="text-2xl">📊</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800 mb-2">Reportes Completos</h3>
+                <p class="text-gray-600">
+                    Genera recibos, reportes contables y documentos legales
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Funcionalidades principales -->
+    <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Funcionalidades Principales
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-lg">👥</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Gestión de Empleados</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Registro completo con datos venezolanos
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Historial laboral y salarial
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-lg">🧮</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Cálculo de Nómina</h3>
+                </div>
+                <ul class="text-gray-600 space-y-2">
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Quincenas automáticas
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        Deducciones SSO, ISLR, etc.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estado del sistema -->
+    <div class="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-8 border border-primary-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Sistema Activo</h3>
+                <p class="text-gray-600">
+                    Servidor funcionando correctamente
+                </p>
+            </div>
+            <div class="text-right">
+                <div class="text-sm text-gray-500 mb-1">URL del servidor:</div>
+                <div class="font-mono text-primary-700 bg-white px-4 py-2 rounded-lg border border-primary-200">
+                    http://localhost:5000
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

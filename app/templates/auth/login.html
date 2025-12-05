@@ -8,11 +8,11 @@
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
         <!-- Header -->
         <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-8">
-            <div class="flex items-center justify-center mb-4">
-                <div class="flex mr-3">
-                    <span class="flag-stripe yellow"></span>
-                    <span class="flag-stripe blue"></span>
-                    <span class="flag-stripe red"></span>
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center justify-center mb-4">
+                    <img src="{{ url_for('static', filename='images/logos/logo_blanco.svg') }}" 
+                        alt="Sistema de Nómina" 
+                        class="h-12 w-auto object-contain">
                 </div>
                 <h2 class="text-2xl font-bold">Acceso al Sistema</h2>
             </div>
@@ -124,12 +124,13 @@
         </div>
 
         <!-- Footer -->
-        <div class="px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <div class="text-center">
-                <div class="flex items-center justify-center mb-2">
-                    <span class="venezuela-flag"></span>
-                    <span class="text-sm font-medium text-gray-700">Sistema de Nómina</span>
-                </div>
+        <div class="text-center">
+            <!-- Logo pequeño en footer -->
+            <div class="flex items-center justify-center mb-2">
+                <img src="{{ url_for('static', filename='images/logos/logo.svg') }}" 
+                    alt="Logo" 
+                    class="h-6 w-auto object-contain mr-2">
+                <span class="text-sm font-medium text-gray-700">Sistema de Nómina</span>
             </div>
         </div>
     </div>

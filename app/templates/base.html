@@ -73,15 +73,23 @@
     <nav class="bg-primary-700 text-white shadow-lg">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
+                <!-- Logo + Texto -->
                 <div class="flex items-center space-x-3">
-                    <div class="flex">
-                        <span class="flag-stripe yellow"></span>
-                        <span class="flag-stripe blue"></span>
-                        <span class="flag-stripe red"></span>
-                    </div>
-                    <a href="/" class="text-xl font-bold hover:text-primary-100 transition">
-                        Sistema Nómina
+                    <a href="/" class="flex items-center space-x-3 no-underline">
+                        <!-- Tu logo (más pequeño) -->
+                        <img src="{{ url_for('static', filename='images/logos/logo_blanco.svg') }}" 
+                            alt="Logo" 
+                            class="h-8 w-auto object-contain">
+                        
+                        <!-- Texto separado -->
+                        <div class="flex flex-col">
+                            <span class="text-xl font-bold text-white leading-tight">
+                                Sistema
+                            </span>
+                            <span class="text-lg font-semibold text-primary-200 leading-tight">
+                                Nómina
+                            </span>
+                        </div>
                     </a>
                 </div>
                 
@@ -91,7 +99,7 @@
                         Inicio
                     </a>
                     <a href="/login" class="hover:text-primary-100 transition px-3 py-2 rounded">
-                        Login
+                        Iniciar Sesión
                     </a>
                 </div>
             </div>
@@ -105,13 +113,13 @@
     
     <!-- Footer -->
     <footer class="mt-12 border-t border-gray-200 bg-white">
-        <div class="container mx-auto px-4 py-6">
-            <div class="text-center text-gray-600">
-                <div class="mb-2">
-                    <span class="venezuela-flag"></span>
-                    <span class="font-medium">Sistema de Nómina</span>
-                </div>
-                <p class="text-sm">Sistema especializado para contadores</p>
+        <div class="text-center text-gray-600">
+            <div class="mb-2">
+                <!-- Logo pequeño en footer -->
+                <img src="{{ url_for('static', filename='images/logos/logo.svg') }}" 
+                    alt="Logo" 
+                    class="h-6 w-auto object-contain mx-auto mb-2">
+                <span class="font-medium">Sistema de Nómina</span>
             </div>
         </div>
     </footer>

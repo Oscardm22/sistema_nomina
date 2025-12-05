@@ -21,11 +21,6 @@
                             600: '#0284c7',
                             700: '#0369a1',
                         },
-                        venezuela: {
-                            yellow: '#FFCC00',
-                            blue: '#00247D',
-                            red: '#CF142B'
-                        }
                     },
                     fontFamily: {
                         'sans': ['Inter', 'system-ui', 'sans-serif'],
@@ -40,32 +35,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        .venezuela-flag {
-            display: inline-block;
-            width: 20px;
-            height: 12px;
-            background: linear-gradient(to bottom, 
-                #CF142B 33%, 
-                #00247D 33%, #00247D 66%, 
-                #FFCC00 66%);
-            border-radius: 2px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-        
-        .flag-stripe {
-            display: inline-block;
-            width: 5px;
-            height: 20px;
-            margin: 0 1px;
-        }
-        
-        .flag-stripe.yellow { background-color: #FFCC00; }
-        .flag-stripe.blue { background-color: #00247D; }
-        .flag-stripe.red { background-color: #CF142B; }
-    </style>
-    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/logos/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logos/favicon.ico') }}" type="image/x-icon">
+
+    <!-- Para mejor soporte en todos los dispositivos -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logos/favicon.ico') }}">
+    <meta name="theme-color" content="#0ea5e9">
+
     {% block extra_css %}{% endblock %}
 </head>
 <body class="bg-gray-50 font-sans">

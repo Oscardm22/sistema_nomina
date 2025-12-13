@@ -187,7 +187,7 @@ $pageTitle = "Dashboard";
                         
                         <!-- Menú desplegable (solo Cerrar Sesión) -->
                         <div class="user-dropdown" id="userDropdown">
-                            <a href="<?php echo BASE_URL; ?>modulos/auth/logout.php" 
+                            <a href="<?php echo BASE_URL; ?>modules/auth/logout.php" 
                                class="flex items-center px-4 py-3 hover:bg-gray-100 text-gray-800">
                                 <i class="fas fa-sign-out-alt mr-3 text-red-500"></i>
                                 <span>Cerrar Sesión</span>

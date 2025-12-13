@@ -1,5 +1,16 @@
 module.exports = {
-  content: ["./**/*.{php,html,js}"],
+  content: [
+    // Archivos PHP
+    "./**/*.php",
+    
+    // Archivos HTML
+    "./**/*.html",
+    
+    // Solo archivos JS
+    "./assets/**/*.js",
+    "./**/*.js",
+    "!./node_modules/**",
+  ],
   theme: {
     extend: {
       colors: {

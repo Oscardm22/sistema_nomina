@@ -1,9 +1,19 @@
 {
   "name": "sistema-nomina",
   "version": "1.0.0",
+  "description": "Sistema de nómina para contadores",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-output.css --watch",
+    "build": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-output.css --minify",
+    "build:prod": "NODE_ENV=production tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-output.css --minify"
+  },
   "devDependencies": {
     "tailwindcss": "^3.3.0",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24"
-  }
+  },
+  "keywords": ["nomina", "contadores", "php", "tailwind"],
+  "author": "Tu Nombre",
+  "license": "MIT"
 }

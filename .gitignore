@@ -1,0 +1,50 @@
+# XAMPP / Apache
+.htaccess
+.htpasswd
+logs/
+tmp/
+
+# Configuración sensible
+config/database.php
+config/local-config.php
+*.env
+.env.local
+.env.*.local
+
+# Archivos de desarrollo
+setup.php
+crear-db.php
+test-*.php
+diagnostico.php
+*.sql
+backup/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de sesión
+sess_*
+php_session_*
+
+# Cache
+cache/
+tmp/
+
+# Uploads
+uploads/
+
+# Composer
+vendor/
+composer.lock
+
+# Node
+node_modules/
+package-lock.json

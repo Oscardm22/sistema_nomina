@@ -51,6 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Obtener el ID del usuario recién creado
                 $usuario_id = $conn->lastInsertId();
                 
+                // Agregar al sistema de autocompletado (para futuros logins)
+                if (isset($_SESSION['system_users'])) {
+                    $_SESSION['system_users'][] = [
+                        'email' => $email,
+                        'name' => $nombre
+                    ];
+                }
+                
                 // Iniciar sesión automáticamente después del registro
                 $_SESSION['usuario_id'] = $usuario_id;
                 $_SESSION['usuario_nombre'] = $nombre;
@@ -83,38 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        body {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-            min-height: 100vh;
-        }
-        
-        .register-card {
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-        
-        .btn-register {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-register:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-        }
-    </style>
+    <!-- Estilos específicos del registro -->
+    <link rel="stylesheet" href="styles/registrar.css">
 </head>
 <body class="flex items-center justify-center p-4 py-8">
     <div class="w-full max-w-md register-card">
@@ -162,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <?php endif; ?>
                 
-                <form method="POST" action="" class="space-y-6" id="registerForm">
+                <form method="POST" action="" class="space-y-6" id="registerForm" novalidate>
                     <!-- Nombre -->
                     <div>
                         <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
@@ -172,9 +150,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                id="nombre" 
                                name="nombre" 
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition register-input"
                                placeholder="Tu nombre completo"
-                               value="<?php echo htmlspecialchars($nombre); ?>">
+                               value="<?php echo htmlspecialchars($nombre); ?>"
+                               data-validation="required|min:3">
+                        <div class="validation-message mt-1 text-xs text-red-600 hidden" id="nombre-error"></div>
                     </div>
                     
                     <!-- Email -->
@@ -186,9 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                id="email" 
                                name="email" 
                                required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition register-input"
                                placeholder="tu@email.com"
-                               value="<?php echo htmlspecialchars($email); ?>">
+                               value="<?php echo htmlspecialchars($email); ?>"
+                               data-validation="required|email">
+                        <div class="validation-message mt-1 text-xs text-red-600 hidden" id="email-error"></div>
                     </div>
                     
                     <!-- Contraseña -->
@@ -196,13 +178,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-lock mr-2 text-gray-500"></i>Contraseña *
                         </label>
-                        <input type="password" 
-                               id="password" 
-                               name="password" 
-                               required
-                               minlength="6"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
-                               placeholder="Mínimo 6 caracteres">
+                        <div class="relative">
+                            <input type="password" 
+                                   id="password" 
+                                   name="password" 
+                                   required
+                                   minlength="6"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition register-input"
+                                   placeholder="Mínimo 6 caracteres"
+                                   data-validation="required|min:6">
+                            <button type="button" 
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center password-toggle"
+                                    data-target="password">
+                                <i class="fas fa-eye text-gray-500 hover:text-gray-700"></i>
+                            </button>
+                        </div>
+                        <div class="validation-message mt-1 text-xs text-red-600 hidden" id="password-error"></div>
                         <p class="text-xs text-gray-500 mt-2">La contraseña debe tener al menos 6 caracteres</p>
                     </div>
                     
@@ -211,18 +202,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-lock mr-2 text-gray-500"></i>Confirmar Contraseña *
                         </label>
-                        <input type="password" 
-                               id="confirm_password" 
-                               name="confirm_password" 
-                               required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
-                               placeholder="Repite tu contraseña">
+                        <div class="relative">
+                            <input type="password" 
+                                   id="confirm_password" 
+                                   name="confirm_password" 
+                                   required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition register-input"
+                                   placeholder="Repite tu contraseña"
+                                   data-validation="required|match:password">
+                            <button type="button" 
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center password-toggle"
+                                    data-target="confirm_password">
+                                <i class="fas fa-eye text-gray-500 hover:text-gray-700"></i>
+                            </button>
+                        </div>
                         <div id="passwordMatch" class="mt-1 text-xs"></div>
+                        <div class="validation-message mt-1 text-xs text-red-600 hidden" id="confirm_password-error"></div>
                     </div>
                     
                     <!-- Botón de registro -->
-                    <button type="submit" 
-                            class="btn-register w-full text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md">
+                   <button type="submit" 
+        class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
                         <i class="fas fa-user-plus mr-2"></i>Crear Cuenta
                     </button>
                     
@@ -250,55 +250,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     
-    <script>
-        // Validación de coincidencia de contraseñas en tiempo real
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirm_password');
-        const matchText = document.getElementById('passwordMatch');
-        
-        function checkPasswordMatch() {
-            if (password.value && confirmPassword.value) {
-                if (password.value === confirmPassword.value) {
-                    matchText.innerHTML = '<i class="fas fa-check-circle text-green-500 mr-1"></i>Las contraseñas coinciden';
-                    matchText.className = 'mt-1 text-xs text-green-600';
-                } else {
-                    matchText.innerHTML = '<i class="fas fa-times-circle text-red-500 mr-1"></i>Las contraseñas no coinciden';
-                    matchText.className = 'mt-1 text-xs text-red-600';
-                }
-            } else {
-                matchText.textContent = '';
-            }
-        }
-        
-        password.addEventListener('input', checkPasswordMatch);
-        confirmPassword.addEventListener('input', checkPasswordMatch);
-        
-        // Validación del formulario
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm_password').value;
-            const terminos = document.getElementById('terminos').checked;
-            
-            if (!terminos) {
-                e.preventDefault();
-                alert('Debes aceptar los términos y condiciones');
-                return false;
-            }
-            
-            if (password.length < 6) {
-                e.preventDefault();
-                alert('La contraseña debe tener al menos 6 caracteres');
-                return false;
-            }
-            
-            if (password !== confirmPassword) {
-                e.preventDefault();
-                alert('Las contraseñas no coinciden');
-                return false;
-            }
-            
-            return true;
-        });
-    </script>
+    <!-- JavaScript modularizado -->
+    <script src="js/history.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/registrar.js"></script>
 </body>
 </html>

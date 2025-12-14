@@ -1,0 +1,47 @@
+/* Solo estilos específicos que Tailwind no cubre fácilmente */
+
+body {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    min-height: 100vh;
+}
+
+/* Estilo para el autocompletado del navegador */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #374151 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Animaciones personalizadas */
+@keyframes slideUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Animación de shake para errores */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Barra de fuerza de contraseña - estilos base */
+.password-strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}

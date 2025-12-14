@@ -337,7 +337,7 @@ $pageTitle = "Dashboard";
                             <p class="text-gray-600 mt-2">Bienvenido, <?php echo $_SESSION['usuario_nombre']; ?></p>
                         </div>
                         <div class="text-sm text-gray-500">
-                            <?php echo date('l, d F Y'); ?>
+                            <?php echo fechaEnEspanol('l, d F Y'); ?>
                         </div>
                     </div>
                     

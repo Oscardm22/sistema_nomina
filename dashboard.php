@@ -177,6 +177,7 @@ try {
     $error = "Error al cargar estadísticas: " . $e->getMessage();
 }
 
+$paginaActual = 'dashboard';
 $pageTitle = "Dashboard";
 ?>
 <!DOCTYPE html>
@@ -244,14 +245,14 @@ $pageTitle = "Dashboard";
                 <ul class="space-y-2">
                     <li>
                         <a href="dashboard.php" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-50 text-blue-700">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg <?php echo $paginaActual === 'dashboard' ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-100 transition'; ?>">
                             <i class="fas fa-tachometer-alt w-6"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
                         <a href="modules/empresas/" 
-                           class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition">
+                        class="flex items-center space-x-3 px-4 py-3 rounded-lg <?php echo $paginaActual === 'empresas' ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-100 transition'; ?>">
                             <i class="fas fa-building w-6"></i>
                             <span>Empresas</span>
                             <?php if($stats['empresas'] > 0): ?>

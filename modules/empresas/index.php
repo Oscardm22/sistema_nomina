@@ -46,6 +46,27 @@ $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $empresas = $stmt->fetchAll();
 
+// Definir página actual para el sidebar
+$paginaActual = 'empresas';
+
+// Obtener estadísticas para el sidebar
+$stats = [
+    'empresas' => $total_empresas,
+    'empleados' => 0,
+    'nominas_pendientes' => 0
+];
+
+// Obtener contador de empleados
+$stmt_empleados = $conn->prepare("
+    SELECT COUNT(e.id) as total 
+    FROM empleados e
+    INNER JOIN empresas emp ON e.empresa_id = emp.id
+    WHERE emp.usuario_id = ?
+");
+$stmt_empleados->execute([$usuario_id]);
+$result_empleados = $stmt_empleados->fetch();
+$stats['empleados'] = $result_empleados['total'];
+
 $pageTitle = "Gestión de Empresas";
 ?>
 
@@ -90,62 +111,27 @@ $pageTitle = "Gestión de Empresas";
             background-color: #3b82f6;
             color: white;
         }
+        /* Estilos para el sidebar */
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
+        .progress-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
-    <?php 
-    // Crear navbar temporal si no existe el partial
-    if(!file_exists('../../partials/navbar.php')):
-    ?>
-    <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-3">
-                    <a href="../../dashboard.php" class="flex items-center space-x-3">
-                        <i class="fas fa-calculator text-2xl"></i>
-                        <span class="text-xl font-bold">NominaContadores</span>
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="../../dashboard.php" class="hover:text-blue-200">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                    <a href="<?php echo BASE_URL; ?>modules/auth/logout.php" class="hover:text-blue-200">
-                        <i class="fas fa-sign-out-alt"></i> Salir
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <?php else: ?>
-        <?php include '../../partials/navbar.php'; ?>
-    <?php endif; ?>
+    <?php include '../../partials/navbar.php'; ?>
 
     <!-- Main Layout -->
     <div class="flex">
         <!-- Sidebar -->
-        <?php 
-        // Crear sidebar temporal si no existe el partial
-        if(!file_exists('../../partials/sidebar.php')):
-        ?>
-        <div class="w-64 bg-white shadow-lg min-h-screen">
-            <div class="p-6">
-                <div class="mb-8">
-                    <h3 class="font-bold text-gray-700 mb-2">Menú Principal</h3>
-                    <div class="text-sm text-gray-500"><?php echo $_SESSION['usuario_email'] ?? 'Usuario'; ?></div>
-                </div>
-                <ul class="space-y-2">
-                    <li><a href="../../dashboard.php" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-50 text-blue-700"><i class="fas fa-tachometer-alt w-6"></i><span>Dashboard</span></a></li>
-                    <li><a href="index.php" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-building w-6"></i><span>Empresas</span></a></li>
-                    <li><a href="../empleados/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-users w-6"></i><span>Empleados</span></a></li>
-                    <li><a href="../nominas/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-file-invoice-dollar w-6"></i><span>Nóminas</span></a></li>
-                </ul>
-            </div>
-        </div>
-        <?php else: ?>
-            <?php include '../../partials/sidebar.php'; ?>
-        <?php endif; ?>
+        <?php include '../../partials/sidebar.php'; ?>
 
         <!-- Main Content -->
         <div class="flex-1">

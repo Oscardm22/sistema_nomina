@@ -1,0 +1,60 @@
+/* Estilos específicos para recuperación de contraseña */
+
+body {
+    min-height: 100vh;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Barra de fuerza de contraseña */
+.password-strength-bar {
+    height: 4px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    width: 0%;
+}
+
+.password-strength-bar.weak {
+    background-color: #ef4444;
+    width: 25%;
+}
+
+.password-strength-bar.fair {
+    background-color: #f59e0b;
+    width: 50%;
+}
+
+.password-strength-bar.good {
+    background-color: #10b981;
+    width: 75%;
+}
+
+.password-strength-bar.strong {
+    background-color: #059669;
+    width: 100%;
+}
+
+/* Estilos para el toggle de password */
+.password-toggle {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: #374151;
+}
+
+/* Estilo para el autocompletado del navegador */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #374151 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}

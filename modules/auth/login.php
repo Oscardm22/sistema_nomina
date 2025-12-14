@@ -135,6 +135,15 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
                     </button>
                 </form>
             
+                <!-- Enlace para recuperar contraseña -->
+                <div class="mt-4 text-center">
+                    <a href="recuperar_password.php" 
+                    class="text-sm text-blue-600 hover:text-blue-800 transition">
+                        <i class="fas fa-question-circle mr-1"></i>
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
                 <!-- Divider -->
                 <div class="mt-6 pt-6 border-t border-gray-200">
                     <p class="text-center text-sm text-gray-600">

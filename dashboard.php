@@ -250,7 +250,7 @@ $pageTitle = "Dashboard";
                         </a>
                     </li>
                     <li>
-                        <a href="modulos/empresas/" 
+                        <a href="modules/empresas/" 
                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-building w-6"></i>
                             <span>Empresas</span>
@@ -262,7 +262,7 @@ $pageTitle = "Dashboard";
                         </a>
                     </li>
                     <li>
-                        <a href="modulos/empleados/" 
+                        <a href="modules/empleados/" 
                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-users w-6"></i>
                             <span>Empleados</span>
@@ -274,7 +274,7 @@ $pageTitle = "Dashboard";
                         </a>
                     </li>
                     <li>
-                        <a href="modulos/nominas/" 
+                        <a href="modules/nominas/" 
                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-file-invoice-dollar w-6"></i>
                             <span>Nóminas</span>
@@ -286,7 +286,7 @@ $pageTitle = "Dashboard";
                         </a>
                     </li>
                     <li>
-                        <a href="modulos/reportes/" 
+                        <a href="modules/reportes/" 
                            class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition">
                             <i class="fas fa-chart-bar w-6"></i>
                             <span>Reportes</span>
@@ -341,19 +341,19 @@ $pageTitle = "Dashboard";
                     
                     <!-- Quick Actions -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        <a href="modulos/empresas/agregar.php" 
+                        <a href="modules/empresas/agregar.php" 
                            class="flex items-center justify-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-lg hover:from-blue-100 hover:to-blue-200 transition">
                             <i class="fas fa-plus-circle text-blue-600 text-xl mr-3"></i>
                             <span class="font-medium text-blue-900">Nueva Empresa</span>
                         </a>
                         
-                        <a href="modulos/empleados/agregar.php" 
+                        <a href="modules/empleados/agregar.php" 
                            class="flex items-center justify-center p-4 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-lg hover:from-green-100 hover:to-green-200 transition">
                             <i class="fas fa-user-plus text-green-600 text-xl mr-3"></i>
                             <span class="font-medium text-green-900">Nuevo Empleado</span>
                         </a>
                         
-                        <a href="modulos/nominas/calcular.php" 
+                        <a href="modules/nominas/calcular.php" 
                            class="flex items-center justify-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg hover:from-purple-100 hover:to-purple-200 transition">
                             <i class="fas fa-calculator text-purple-600 text-xl mr-3"></i>
                             <span class="font-medium text-purple-900">Calcular Nómina</span>
@@ -374,7 +374,7 @@ $pageTitle = "Dashboard";
                                 <i class="fas fa-building text-2xl text-blue-600"></i>
                             </div>
                         </div>
-                        <a href="modulos/empresas/" 
+                        <a href="modules/empresas/" 
                            class="inline-flex items-center text-blue-600 hover:text-blue-800 mt-4 text-sm font-medium">
                             Gestionar empresas
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -392,7 +392,7 @@ $pageTitle = "Dashboard";
                                 <i class="fas fa-users text-2xl text-green-600"></i>
                             </div>
                         </div>
-                        <a href="modulos/empleados/" 
+                        <a href="modules/empleados/" 
                            class="inline-flex items-center text-green-600 hover:text-green-800 mt-4 text-sm font-medium">
                             Ver empleados
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -410,7 +410,7 @@ $pageTitle = "Dashboard";
                                 <i class="fas fa-clock text-2xl text-yellow-600"></i>
                             </div>
                         </div>
-                        <a href="modulos/nominas/" 
+                        <a href="modules/nominas/" 
                            class="inline-flex items-center text-yellow-600 hover:text-yellow-800 mt-4 text-sm font-medium">
                             Procesar nóminas
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -428,7 +428,7 @@ $pageTitle = "Dashboard";
                                 <i class="fas fa-check-circle text-2xl text-purple-600"></i>
                             </div>
                         </div>
-                        <a href="modulos/nominas/?estatus=Pagada" 
+                        <a href="modules/nominas/?estatus=Pagada" 
                            class="inline-flex items-center text-purple-600 hover:text-purple-800 mt-4 text-sm font-medium">
                             Ver historial
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -458,11 +458,11 @@ $pageTitle = "Dashboard";
                                     <p class="text-lg font-medium">No hay actividad registrada</p>
                                     <p class="text-sm mt-2 text-center">Comienza procesando nóminas o agregando empleados</p>
                                     <div class="mt-4 flex space-x-2">
-                                        <a href="modulos/nominas/calcular.php" 
+                                        <a href="modules/nominas/calcular.php" 
                                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
                                             <i class="fas fa-calculator mr-2"></i>Calcular Nómina
                                         </a>
-                                        <a href="modulos/empleados/agregar.php" 
+                                        <a href="modules/empleados/agregar.php" 
                                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm">
                                             <i class="fas fa-user-plus mr-2"></i>Agregar Empleado
                                         </a>
@@ -476,7 +476,7 @@ $pageTitle = "Dashboard";
                     <div class="bg-white rounded-xl shadow p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-xl font-bold text-gray-900">Empresas Recientes</h2>
-                            <a href="modulos/empresas/" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                            <a href="modules/empresas/" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
                                 Ver todas
                             </a>
                         </div>
@@ -494,7 +494,7 @@ $pageTitle = "Dashboard";
                                             <p class="text-sm text-gray-500">RFC: <?php echo htmlspecialchars($empresa['rfc']); ?></p>
                                         </div>
                                     </div>
-                                    <a href="modulos/empresas/editar.php?id=<?php echo $empresa['id']; ?>" 
+                                    <a href="modules/empresas/editar.php?id=<?php echo $empresa['id']; ?>" 
                                        class="text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -506,7 +506,7 @@ $pageTitle = "Dashboard";
                                         <i class="fas fa-building text-4xl"></i>
                                     </div>
                                     <p class="text-gray-500">No hay empresas registradas</p>
-                                    <a href="modulos/empresas/agregar.php" 
+                                    <a href="modules/empresas/agregar.php" 
                                        class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium">
                                         Agregar primera empresa
                                     </a>
@@ -522,7 +522,7 @@ $pageTitle = "Dashboard";
                     <div class="bg-white rounded-xl shadow p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-xl font-bold text-gray-900">Empleados Recientes</h2>
-                            <a href="modulos/empleados/" class="text-sm text-green-600 hover:text-green-800 font-medium">
+                            <a href="modules/empleados/" class="text-sm text-green-600 hover:text-green-800 font-medium">
                                 Ver todos
                             </a>
                         </div>
@@ -556,7 +556,7 @@ $pageTitle = "Dashboard";
                                         <i class="fas fa-users text-4xl"></i>
                                     </div>
                                     <p class="text-gray-500">No hay empleados registrados</p>
-                                    <a href="modulos/empleados/agregar.php" 
+                                    <a href="modules/empleados/agregar.php" 
                                        class="inline-block mt-2 text-green-600 hover:text-green-800 font-medium">
                                         Agregar primer empleado
                                     </a>
@@ -586,7 +586,7 @@ $pageTitle = "Dashboard";
                                         </p>
                                     </div>
                                 </div>
-                                <a href="modulos/nominas/" class="text-yellow-600 hover:text-yellow-800">
+                                <a href="modules/nominas/" class="text-yellow-600 hover:text-yellow-800">
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -603,7 +603,7 @@ $pageTitle = "Dashboard";
                                         <p class="text-sm text-gray-600">Comienza agregando tu primera empresa</p>
                                     </div>
                                 </div>
-                                <a href="modulos/empresas/agregar.php" class="text-blue-600 hover:text-blue-800">
+                                <a href="modules/empresas/agregar.php" class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </div>
@@ -620,7 +620,7 @@ $pageTitle = "Dashboard";
                                         <p class="text-sm text-gray-600">Agrega empleados a tu empresa</p>
                                     </div>
                                 </div>
-                                <a href="modulos/empleados/agregar.php" class="text-green-600 hover:text-green-800">
+                                <a href="modules/empleados/agregar.php" class="text-green-600 hover:text-green-800">
                                     <i class="fas fa-plus"></i>
                                 </a>
                             </div>
@@ -636,7 +636,7 @@ $pageTitle = "Dashboard";
                                         <p class="text-sm text-gray-600">Generar reporte del mes actual</p>
                                     </div>
                                 </div>
-                                <a href="modulos/reportes/" class="text-gray-600 hover:text-gray-800">
+                                <a href="modules/reportes/" class="text-gray-600 hover:text-gray-800">
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>

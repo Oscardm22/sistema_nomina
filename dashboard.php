@@ -13,6 +13,14 @@ $stats = [
     'nominas_pagadas' => 0
 ];
 
+// Variables para datos del gráfico
+$datosGrafico = [
+    'tieneDatos' => false,
+    'meses' => ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+    'nominasProcesadas' => [0, 0, 0, 0, 0, 0, 0],
+    'empleadosAgregados' => [0, 0, 0, 0, 0, 0, 0]
+];
+
 try {
     // 1. Contar empresas del usuario
     $stmt = $conn->prepare("SELECT COUNT(*) as total FROM empresas WHERE usuario_id = ?");
@@ -31,7 +39,7 @@ try {
     $result = $stmt->fetch();
     $stats['empleados'] = $result['total'];
     
-    // 3. Contar nóminas pendientes (ejemplo, puedes ajustar según tu estructura)
+    // 3. Contar nóminas pendientes
     $stmt = $conn->prepare("
         SELECT COUNT(n.id) as total 
         FROM nominas n
@@ -77,7 +85,7 @@ try {
     $stmt->execute([$usuario_id]);
     $empleadosRecientes = $stmt->fetchAll();
     
-    // 7. Calcular total pagado en nóminas (ejemplo)
+    // 7. Calcular total pagado en nóminas
     $stmt = $conn->prepare("
         SELECT COALESCE(SUM(n.neto_pagar), 0) as total_pagado
         FROM nominas n
@@ -89,13 +97,88 @@ try {
     $result = $stmt->fetch();
     $totalPagado = $result['total_pagado'];
     
+    // 8. OBTENER DATOS PARA EL GRÁFICO - Nóminas procesadas por mes (últimos 6 meses)
+    $stmt = $conn->prepare("
+        SELECT 
+            DATE_FORMAT(n.fecha_pago, '%b') as mes,
+            MONTH(n.fecha_pago) as mes_numero,
+            COUNT(*) as total_nominas
+        FROM nominas n
+        INNER JOIN empleados e ON n.empleado_id = e.id
+        INNER JOIN empresas emp ON e.empresa_id = emp.id
+        WHERE emp.usuario_id = ? 
+            AND n.estatus = 'Pagada'
+            AND n.fecha_pago >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+        GROUP BY MONTH(n.fecha_pago), DATE_FORMAT(n.fecha_pago, '%b')
+        ORDER BY MONTH(n.fecha_pago)
+    ");
+    $stmt->execute([$usuario_id]);
+    $nominasPorMes = $stmt->fetchAll();
+    
+    // 9. OBTENER DATOS PARA EL GRÁFICO - Empleados agregados por mes (últimos 6 meses)
+    $stmt = $conn->prepare("
+        SELECT 
+            DATE_FORMAT(e.fecha_ingreso, '%b') as mes,
+            MONTH(e.fecha_ingreso) as mes_numero,
+            COUNT(*) as total_empleados
+        FROM empleados e
+        INNER JOIN empresas emp ON e.empresa_id = emp.id
+        WHERE emp.usuario_id = ? 
+            AND e.fecha_ingreso >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+        GROUP BY MONTH(e.fecha_ingreso), DATE_FORMAT(e.fecha_ingreso, '%b')
+        ORDER BY MONTH(e.fecha_ingreso)
+    ");
+    $stmt->execute([$usuario_id]);
+    $empleadosPorMes = $stmt->fetchAll();
+    
+    // Procesar datos para el gráfico
+    if (!empty($nominasPorMes) || !empty($empleadosPorMes)) {
+        $datosGrafico['tieneDatos'] = true;
+        
+        // Mapear nombres de meses en español
+        $mesesEspanol = [
+            'Jan' => 'Ene', 'Feb' => 'Feb', 'Mar' => 'Mar', 'Apr' => 'Abr',
+            'May' => 'May', 'Jun' => 'Jun', 'Jul' => 'Jul', 'Aug' => 'Ago',
+            'Sep' => 'Sep', 'Oct' => 'Oct', 'Nov' => 'Nov', 'Dec' => 'Dic'
+        ];
+        
+        // Obtener los últimos 6 meses
+        $ultimos6Meses = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $fecha = date('M', strtotime("-$i months"));
+            $mesNumero = date('n', strtotime("-$i months"));
+            $mesEspanol = isset($mesesEspanol[$fecha]) ? $mesesEspanol[$fecha] : $fecha;
+            $ultimos6Meses[$mesNumero] = $mesEspanol;
+        }
+        
+        // Actualizar meses del gráfico
+        $datosGrafico['meses'] = array_values($ultimos6Meses);
+        
+        // Llenar datos de nóminas procesadas
+        foreach ($nominasPorMes as $dato) {
+            $mesNumero = $dato['mes_numero'];
+            $mesIndex = array_search($mesNumero, array_keys($ultimos6Meses));
+            if ($mesIndex !== false) {
+                $datosGrafico['nominasProcesadas'][$mesIndex] = $dato['total_nominas'];
+            }
+        }
+        
+        // Llenar datos de empleados agregados
+        foreach ($empleadosPorMes as $dato) {
+            $mesNumero = $dato['mes_numero'];
+            $mesIndex = array_search($mesNumero, array_keys($ultimos6Meses));
+            if ($mesIndex !== false) {
+                $datosGrafico['empleadosAgregados'][$mesIndex] = $dato['total_empleados'];
+            }
+        }
+    }
+    
 } catch(PDOException $e) {
     $error = "Error al cargar estadísticas: " . $e->getMessage();
 }
 
 $pageTitle = "Dashboard";
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -104,64 +187,13 @@ $pageTitle = "Dashboard";
     <title><?php echo $pageTitle; ?> - Sistema de Nómina</title>
     
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/tailwind-output.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        /* Estilos para el menú desplegable */
-        .user-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 100%;
-            margin-top: 0.5rem;
-            min-width: 180px;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            animation: fadeIn 0.2s ease-out;
-        }
-        
-        .user-dropdown.show {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Estilos existentes */
-        .dashboard-card {
-            transition: all 0.3s ease;
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .progress-bar {
-            height: 6px;
-            border-radius: 3px;
-            overflow: hidden;
-            background-color: #e5e7eb;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            transition: width 0.3s ease;
-        }
-    </style>
+    <!-- Estilos personalizados para Dashboard -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/dashboard.css">
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
@@ -410,14 +442,33 @@ $pageTitle = "Dashboard";
                     <div class="bg-white rounded-xl shadow p-6">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-xl font-bold text-gray-900">Actividad Mensual</h2>
-                            <select class="text-sm border border-gray-300 rounded-lg px-3 py-1">
-                                <option>Últimos 30 días</option>
-                                <option>Este mes</option>
-                                <option>Este año</option>
+                            <select class="text-sm border border-gray-300 rounded-lg px-3 py-1" id="periodoSelect">
+                                <option value="6">Últimos 6 meses</option>
+                                <option value="3">Últimos 3 meses</option>
+                                <option value="12">Este año</option>
                             </select>
                         </div>
                         <div class="h-64">
-                            <canvas id="activityChart"></canvas>
+                            <?php if($datosGrafico['tieneDatos']): ?>
+                                <canvas id="activityChart"></canvas>
+                            <?php else: ?>
+                                <!-- Mensaje cuando no hay datos -->
+                                <div class="flex flex-col items-center justify-center h-full text-gray-400">
+                                    <i class="fas fa-chart-line text-4xl mb-3"></i>
+                                    <p class="text-lg font-medium">No hay actividad registrada</p>
+                                    <p class="text-sm mt-2 text-center">Comienza procesando nóminas o agregando empleados</p>
+                                    <div class="mt-4 flex space-x-2">
+                                        <a href="modulos/nominas/calcular.php" 
+                                           class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                            <i class="fas fa-calculator mr-2"></i>Calcular Nómina
+                                        </a>
+                                        <a href="modulos/empleados/agregar.php" 
+                                           class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm">
+                                            <i class="fas fa-user-plus mr-2"></i>Agregar Empleado
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -636,113 +687,22 @@ $pageTitle = "Dashboard";
         </div>
     </div>
 
-    <!-- JavaScript para el menú desplegable -->
-    <script>
-        // Control del menú desplegable
-        const userMenuBtn = document.getElementById('userMenuBtn');
-        const userDropdown = document.getElementById('userDropdown');
-        const chevronIcon = document.getElementById('chevronIcon');
-        
-        let isDropdownOpen = false;
-        
-        // Abrir/cerrar menú al hacer clic
-        userMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Evitar que el clic se propague
-            isDropdownOpen = !isDropdownOpen;
-            
-            if (isDropdownOpen) {
-                userDropdown.classList.add('show');
-                chevronIcon.style.transform = 'rotate(180deg)';
-            } else {
-                userDropdown.classList.remove('show');
-                chevronIcon.style.transform = 'rotate(0deg)';
-            }
-        });
-        
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('show');
-                chevronIcon.style.transform = 'rotate(0deg)';
-                isDropdownOpen = false;
-            }
-        });
-        
-        // Cerrar menú al hacer clic en una opción
-        userDropdown.addEventListener('click', function() {
-            userDropdown.classList.remove('show');
-            chevronIcon.style.transform = 'rotate(0deg)';
-            isDropdownOpen = false;
-        });
-        
-        // Evitar que el menú se cierre al hacer clic dentro de él
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    </script>
-    
-    <!-- JavaScript para gráficos (opcional) -->
-    <script>
-        // Gráfico de actividad
-        const ctx = document.getElementById('activityChart');
-        if (ctx) {
-            const activityChart = new Chart(ctx.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Nóminas procesadas',
-                        data: [12, 19, 8, 15, 22, 18, 25],
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }, {
-                        label: 'Empleados agregados',
-                        data: [5, 10, 6, 12, 8, 15, 10],
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        // Actualizar animaciones de las cards
-        document.querySelectorAll('.dashboard-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
+    <!-- Pasar datos PHP a JavaScript -->
+    <script>
+        window.dashboardData = {
+            tieneDatos: <?php echo $datosGrafico['tieneDatos'] ? 'true' : 'false'; ?>,
+            meses: <?php echo json_encode($datosGrafico['meses']); ?>,
+            nominasProcesadas: <?php echo json_encode($datosGrafico['nominasProcesadas']); ?>,
+            empleadosAgregados: <?php echo json_encode($datosGrafico['empleadosAgregados']); ?>
+        };
     </script>
+
+    <!-- Scripts externos -->
+    <script src="<?php echo BASE_URL; ?>assets/js/dashboard/userMenu.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/dashboard/charts.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/dashboard/cardAnimations.js"></script>
 </body>
 </html>

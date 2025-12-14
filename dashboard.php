@@ -65,7 +65,8 @@ try {
     
     // 5. Obtener últimas empresas
     $stmt = $conn->prepare("
-        SELECT * FROM empresas 
+        SELECT id, nombre, rif, direccion, fecha_alta 
+        FROM empresas 
         WHERE usuario_id = ? 
         ORDER BY fecha_alta DESC 
         LIMIT 5
@@ -492,11 +493,11 @@ $pageTitle = "Dashboard";
                                         </div>
                                         <div>
                                             <p class="font-medium text-gray-900"><?php echo htmlspecialchars($empresa['nombre']); ?></p>
-                                            <p class="text-sm text-gray-500">RFC: <?php echo htmlspecialchars($empresa['rfc']); ?></p>
+                                            <p class="text-sm text-gray-500">RIF: <?php echo htmlspecialchars($empresa['rif']); ?></p>
                                         </div>
                                     </div>
                                     <a href="modules/empresas/editar.php?id=<?php echo $empresa['id']; ?>" 
-                                       class="text-blue-600 hover:text-blue-800">
+                                    class="text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </div>
@@ -508,7 +509,7 @@ $pageTitle = "Dashboard";
                                     </div>
                                     <p class="text-gray-500">No hay empresas registradas</p>
                                     <a href="modules/empresas/agregar.php" 
-                                       class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium">
+                                    class="inline-block mt-2 text-blue-600 hover:text-blue-800 font-medium">
                                         Agregar primera empresa
                                     </a>
                                 </div>

@@ -83,46 +83,8 @@ $pageTitle = "Gestión de Empresas";
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        .empresa-card {
-            transition: all 0.3s ease;
-        }
-        .empresa-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .status-badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-        .table-row:hover {
-            background-color: #f9fafb;
-        }
-        .pagination-link {
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.375rem;
-            transition: all 0.2s;
-        }
-        .pagination-link:hover {
-            background-color: #f3f4f6;
-        }
-        .pagination-link.active {
-            background-color: #3b82f6;
-            color: white;
-        }
-        /* Estilos para el sidebar */
-        .progress-bar {
-            height: 6px;
-            border-radius: 3px;
-            overflow: hidden;
-            background-color: #e5e7eb;
-        }
-        .progress-fill {
-            height: 100%;
-            transition: width 0.3s ease;
-        }
-    </style>
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>modules/empresas/styles/listado.css">
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
@@ -259,7 +221,7 @@ $pageTitle = "Gestión de Empresas";
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Contacto
                                         </th>
-                                        <th scope="col" class="px 6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             RIF
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -488,32 +450,6 @@ $pageTitle = "Gestión de Empresas";
     </div>
 
     <!-- JavaScript -->
-    <script>
-        function cambiarEstatus(empresaId, nuevoEstatus) {
-            if(confirm(nuevoEstatus == 1 ? '¿Activar esta empresa?' : '¿Desactivar esta empresa?')) {
-                const formData = new FormData();
-                formData.append('empresa_id', empresaId);
-                formData.append('nuevo_estatus', nuevoEstatus);
-                
-                fetch('cambiar_estatus.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if(data.success) {
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert('Error: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error al cambiar el estatus');
-                });
-            }
-        }
-    </script>
+    <script src="<?php echo BASE_URL; ?>modules/empresas/js/listado.js"></script>
 </body>
 </html>

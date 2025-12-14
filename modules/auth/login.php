@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario_email'] = $usuario['email'];
         $_SESSION['login_time'] = time();
         $_SESSION['ultima_actividad'] = time();
+    
         
         // Regenerar ID de sesión para mayor seguridad
         session_regenerate_id(true);
@@ -64,43 +65,8 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        body {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-            min-height: 100vh;
-        }
-        
-        /* Mejorar la apariencia del autocompletado */
-        input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-            -webkit-text-fill-color: #374151 !important;
-            transition: background-color 5000s ease-in-out 0s;
-        }
-        
-        /* Estilo para campos con autocompletado */
-        .autocomplete-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .autocomplete-item:hover {
-            background-color: #f3f4f6;
-        }
-        
-        .autocomplete-container {
-            position: absolute;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-            width: 100%;
-            display: none;
-        }
-    </style>
+    <!-- Estilos específicos del login -->
+    <link rel="stylesheet" href="styles/login.css">
 </head>
 <body class="flex items-center justify-center p-4">
     <div class="w-full max-w-md">
@@ -186,140 +152,9 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
         </div>
     </div>
     
-    <script>
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // 1. Mostrar/ocultar contraseña
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = togglePassword.querySelector('i');
-            
-            togglePassword.addEventListener('click', function() {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                eyeIcon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
-            });
-            
-            // 2. Prevenir múltiples envíos
-            const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', function(e) {
-                const submitButton = this.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Iniciando sesión...';
-            });
-            
-            // 3. Cargar usuarios guardados del localStorage (opcional)
-            loadSavedCredentials();
-            
-            // 4. Guardar credenciales si el usuario marca "Recordar"
-            document.getElementById('remember').addEventListener('change', function() {
-                if (this.checked) {
-                    saveCredentials();
-                } else {
-                    clearSavedCredentials();
-                }
-            });
-            
-            // 5. Auto-completar si hay credenciales guardadas
-            function loadSavedCredentials() {
-                const savedEmail = localStorage.getItem('nomina_email');
-                const savedRemember = localStorage.getItem('nomina_remember');
-                
-                if (savedEmail && savedRemember === 'true') {
-                    document.getElementById('email').value = savedEmail;
-                    document.getElementById('remember').checked = true;
-                    // No cargamos la contraseña por seguridad
-                    // El navegador la autocompletará si está guardada
-                }
-            }
-            
-            function saveCredentials() {
-                const email = document.getElementById('email').value;
-                if (email) {
-                    localStorage.setItem('nomina_email', email);
-                    localStorage.setItem('nomina_remember', 'true');
-                }
-            }
-            
-            function clearSavedCredentials() {
-                localStorage.removeItem('nomina_email');
-                localStorage.removeItem('nomina_remember');
-            }
-            
-            // 6. Guardar email cuando cambia
-            document.getElementById('email').addEventListener('blur', function() {
-                if (document.getElementById('remember').checked) {
-                    saveCredentials();
-                }
-            });
-            
-            // 7. Prevenir caché pero permitir autocompletado
-            if (window.history.replaceState) {
-                window.history.replaceState(null, null, window.location.href);
-            }
-            
-            // 8. Detectar autocompletado del navegador
-            setTimeout(function() {
-                const emailField = document.getElementById('email');
-                const passwordField = document.getElementById('password');
-                
-                // Verificar si los campos fueron autocompletados
-                if (emailField.value && !emailField.matches(':autofill')) {
-                    // El navegador ya autocompletó
-                    console.log('Campos autocompletados por el navegador');
-                }
-            }, 100);
-        });
-        
-        // 9. Manejar navegación atrás (mantener seguridad)
-        window.onpopstate = function(event) {
-            window.history.pushState(null, null, window.location.href);
-        };
-        
-        window.history.pushState(null, null, window.location.href);
-        
-        // 10. Función para sugerencias de email (opcional)
-        function showEmailSuggestions(email) {
-            const commonDomains = ['@gmail.com', '@hotmail.com', '@outlook.com', '@yahoo.com', '@empresa.com'];
-            const input = email.toLowerCase();
-            const suggestions = commonDomains.filter(domain => domain.startsWith(input));
-            
-            const container = document.getElementById('email-autocomplete');
-            container.innerHTML = '';
-            
-            if (suggestions.length > 0 && input.includes('@')) {
-                const atIndex = input.indexOf('@');
-                const userPart = input.substring(0, atIndex + 1);
-                
-                suggestions.forEach(domain => {
-                    const fullEmail = userPart + domain.substring(1);
-                    const div = document.createElement('div');
-                    div.className = 'autocomplete-item';
-                    div.textContent = fullEmail;
-                    div.onclick = function() {
-                        document.getElementById('email').value = fullEmail;
-                        container.style.display = 'none';
-                    };
-                    container.appendChild(div);
-                });
-                
-                container.style.display = 'block';
-            } else {
-                container.style.display = 'none';
-            }
-        }
-        
-        // Escuchar cambios en el campo email
-        document.getElementById('email').addEventListener('input', function(e) {
-            showEmailSuggestions(e.target.value);
-        });
-        
-        // Ocultar sugerencias al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.relative')) {
-                document.getElementById('email-autocomplete').style.display = 'none';
-            }
-        });
-    </script>
+    <!-- JavaScript modularizado -->
+    <script src="js/history.js"></script>
+    <script src="js/autocomplete.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>

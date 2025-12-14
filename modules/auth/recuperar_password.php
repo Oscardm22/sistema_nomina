@@ -81,13 +81,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                         .btn { 
                             display: inline-block; 
-                            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
-                            color: white; 
+                            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); /* Azul más claro */
+                            color: #ffffff ;
                             padding: 12px 24px; 
                             text-decoration: none; 
                             border-radius: 5px; 
                             font-weight: bold;
                             margin: 20px 0;
+                            border: 2px solid #3b82f6;
                         }
                         .footer { 
                             text-align: center; 
@@ -163,9 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <li>Pegarlo en la barra de direcciones</li>
                                 <li>Presionar Enter</li>
                             </ol>
-                            
-                            <p>¿Necesitas ayuda?<br>
-                            Contáctanos en: soporte@nominasistema.com</p>
                         </div>
                         
                         <div class='footer'>

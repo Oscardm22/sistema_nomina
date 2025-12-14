@@ -238,13 +238,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Recuperar Contraseña - Sistema de Nómina</title>
     
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/tailwind-output.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Estilos específicos -->
-    <link rel="stylesheet" href="recuperar.css">
+    <link rel="stylesheet" href="styles/recuperar.css">
     
     <style>
         .email-preview {
@@ -257,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<body class="flex items-center justify-center p-4 min-h-screen" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);">
     <div class="w-full max-w-md">
         <!-- Card -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -363,10 +363,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <!-- Footer -->
         <div class="mt-6 text-center">
-            <p class="text-sm text-gray-600">
+            <p class="text-sm text-white/80">
                 Sistema de Nómina para Contadores
             </p>
-            <p class="text-xs text-gray-500 mt-1">
+            <p class="text-xs text-white/80">
                 © <?php echo date('Y'); ?> - Versión 1.0
             </p>
         </div>

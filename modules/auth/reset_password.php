@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $token_valido) {
     <!-- Estilos específicos -->
     <link rel="stylesheet" href="recuperar.css">
 </head>
-<body class="flex items-center justify-center p-4 min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<body class="flex items-center justify-center p-4 min-h-screen" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);">
     <div class="w-full max-w-md">
         <!-- Card -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -229,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $token_valido) {
         
         <!-- Footer -->
         <div class="mt-6 text-center">
-            <p class="text-sm text-gray-600">
+            <p class="text-sm text-white/80">
                 Sistema de Nómina para Contadores
             </p>
         </div>

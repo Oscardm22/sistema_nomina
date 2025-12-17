@@ -28,6 +28,11 @@ if (!isset($stats)) {
         'nominas_pendientes' => 0
     ];
 }
+
+// Asegurar que todas las claves existan
+$stats['empresas'] = $stats['empresas'] ?? 0;
+$stats['empleados'] = $stats['empleados'] ?? 0;
+$stats['nominas_pendientes'] = $stats['nominas_pendientes'] ?? 0;
 ?>
 
 <div class="w-64 bg-white shadow-lg min-h-screen">
@@ -81,7 +86,7 @@ if (!isset($stats)) {
                    class="flex items-center space-x-3 px-4 py-3 rounded-lg <?php echo menuActivo($paginaActual, 'nominas'); ?>">
                     <i class="fas fa-file-invoice-dollar w-6"></i>
                     <span>Nóminas</span>
-                    <?php if($stats['nominas_pendientes'] > 0): ?>
+                    <?php if(isset($stats['nominas_pendientes']) && $stats['nominas_pendientes'] > 0): ?>
                     <span class="ml-auto bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
                         <?php echo $stats['nominas_pendientes']; ?>
                     </span>
@@ -107,22 +112,22 @@ if (!isset($stats)) {
                 <div>
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">Empresas</span>
-                        <span class="font-medium"><?php echo $stats['empresas'] ?? 0; ?></span>
+                        <span class="font-medium"><?php echo $stats['empresas']; ?></span>
                     </div>
                     <div class="progress-bar mt-1">
                         <div class="progress-fill bg-blue-500" 
-                             style="width: <?php echo min(100, ($stats['empresas'] ?? 0) * 20); ?>%"></div>
+                             style="width: <?php echo min(100, $stats['empresas'] * 20); ?>%"></div>
                     </div>
                 </div>
                 
                 <div>
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">Empleados</span>
-                        <span class="font-medium"><?php echo $stats['empleados'] ?? 0; ?></span>
+                        <span class="font-medium"><?php echo $stats['empleados']; ?></span>
                     </div>
                     <div class="progress-bar mt-1">
                         <div class="progress-fill bg-green-500" 
-                             style="width: <?php echo min(100, ($stats['empleados'] ?? 0) * 2); ?>%"></div>
+                             style="width: <?php echo min(100, $stats['empleados'] * 2); ?>%"></div>
                     </div>
                 </div>
             </div>
@@ -130,3 +135,16 @@ if (!isset($stats)) {
         <?php endif; ?>
     </div>
 </div>
+
+<style>
+.progress-bar {
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+}
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+</style>

@@ -54,7 +54,8 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
 
-    <link rel="icon" href="<?php echo BASE_URL; ?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" type="image/x-icon">
+
     
     <!-- Meta tags para prevenir caché en el navegador -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -74,12 +75,15 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
     <div class="w-full max-w-md">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 text-center">
-                <div class="mb-4">
-                    <i class="fas fa-calculator text-4xl"></i>
-                </div>
-                <h1 class="text-2xl font-bold">NominaContadores</h1>
-                <p class="text-blue-200 mt-2">Sistema de nómina para contadores</p>
-            </div>
+    <!-- Logo personalizado -->
+    <div class="mb-4 flex justify-center">
+        <img src="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" 
+             alt="Logo NominaContadores" 
+             class="h-16 w-auto">
+    </div>
+    <h1 class="text-2xl font-bold">NominaContadores</h1>
+    <p class="text-blue-200 mt-2">Sistema de nómina para contadores</p>
+</div>
             
             <div class="p-8">
                 <?php if ($error): ?>

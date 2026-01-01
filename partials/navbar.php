@@ -5,7 +5,10 @@
         <div class="flex justify-between items-center py-4">
             <div class="flex items-center space-x-3">
                 <a href="<?php echo BASE_URL; ?>dashboard.php" class="flex items-center space-x-3">
-                    <i class="fas fa-calculator text-2xl"></i>
+                    <!-- Logo en lugar del icono -->
+                    <img src="<?php echo BASE_URL; ?>assets/images/logo_blanco.png" 
+                         alt="Logo NominaContadores" 
+                         class="h-8 w-auto"> <!-- Tamaño ajustado para navbar -->
                     <span class="text-xl font-bold">NominaContadores</span>
                 </a>
             </div>

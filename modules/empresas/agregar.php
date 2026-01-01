@@ -109,45 +109,13 @@ $pageTitle = "Agregar Empresa";
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>modules/empresas/styles/formulario.css">
 </head>
 <body class="bg-gray-50">
-    <!-- Navbar temporal -->
-    <nav class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-3">
-                    <a href="../../dashboard.php" class="flex items-center space-x-3">
-                        <i class="fas fa-calculator text-2xl"></i>
-                        <span class="text-xl font-bold">NominaContadores</span>
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="../../dashboard.php" class="hover:text-blue-200">
-                        <i class="fas fa-home"></i> Dashboard
-                    </a>
-                    <a href="<?php echo BASE_URL; ?>modules/auth/logout.php" class="hover:text-blue-200">
-                        <i class="fas fa-sign-out-alt"></i> Salir
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    
+    <?php include '../../partials/navbar.php'; ?>
+
 
     <!-- Main Layout -->
     <div class="flex">
-        <!-- Sidebar temporal -->
-        <div class="w-64 bg-white shadow-lg min-h-screen">
-            <div class="p-6">
-                <div class="mb-8">
-                    <h3 class="font-bold text-gray-700 mb-2">Menú Principal</h3>
-                    <div class="text-sm text-gray-500"><?php echo $_SESSION['usuario_email'] ?? 'Usuario'; ?></div>
-                </div>
-                <ul class="space-y-2">
-                    <li><a href="../../dashboard.php" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-tachometer-alt w-6"></i><span>Dashboard</span></a></li>
-                    <li><a href="index.php" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-50 text-blue-700"><i class="fas fa-building w-6"></i><span>Empresas</span></a></li>
-                    <li><a href="../empleados/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-users w-6"></i><span>Empleados</span></a></li>
-                    <li><a href="../nominas/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"><i class="fas fa-file-invoice-dollar w-6"></i><span>Nóminas</span></a></li>
-                </ul>
-            </div>
-        </div>
+        <?php include '../../partials/sidebar.php'; ?>
 
         <!-- Main Content -->
         <div class="flex-1">

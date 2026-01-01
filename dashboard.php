@@ -206,7 +206,9 @@ $pageTitle = "Dashboard";
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center space-x-3">
                     <a href="dashboard.php" class="flex items-center space-x-3">
-                        <i class="fas fa-calculator text-2xl"></i>
+                        <img src="<?php echo BASE_URL; ?>assets/images/favicon/favicon-32x32.png" 
+                            alt="Logo NominaContadores" 
+                            class="h-8 w-auto">
                         <span class="text-xl font-bold">NominaContadores</span>
                     </a>
                 </div>

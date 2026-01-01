@@ -90,6 +90,18 @@ $stmt_contratos = $conn->prepare("
 $stmt_contratos->execute([$usuario_id]);
 $distribucion_contratos = $stmt_contratos->fetchAll();
 
+// Obtener estadísticas para el sidebar
+$stats = [
+    'empresas' => 0,
+    'empleados' => $stats['total'] ?? 0, // Usa el total que ya calculaste
+    'nominas_pendientes' => 0
+];
+
+// Obtener contador de empresas
+$stmt_empresas_count = $conn->prepare("SELECT COUNT(*) as total FROM empresas WHERE usuario_id = ?");
+$stmt_empresas_count->execute([$usuario_id]);
+$stats['empresas'] = $stmt_empresas_count->fetch()['total'];
+
 $paginaActual = 'empleados';
 $pageTitle = "Gestión de Empleados";
 ?>

@@ -5,6 +5,27 @@ requerirLogin();
 $conn = conectarDB();
 $usuario_id = $_SESSION['usuario_id'];
 
+$stats = [
+    'empresas' => 0,
+    'empleados' => 0,
+    'nominas_pendientes' => 0
+];
+
+// Contar empresas del usuario
+$stmt_empresas = $conn->prepare("SELECT COUNT(*) as total FROM empresas WHERE usuario_id = ? AND activa = 1");
+$stmt_empresas->execute([$usuario_id]);
+$stats['empresas'] = $stmt_empresas->fetch()['total'];
+
+// Contar empleados activos del usuario
+$stmt_empleados = $conn->prepare("
+    SELECT COUNT(e.id) as total 
+    FROM empleados e
+    INNER JOIN empresas emp ON e.empresa_id = emp.id
+    WHERE emp.usuario_id = ? AND e.activo = 1
+");
+$stmt_empleados->execute([$usuario_id]);
+$stats['empleados'] = $stmt_empleados->fetch()['total'];
+
 // Obtener todas las empresas del usuario para el filtro
 $stmt_empresas = $conn->prepare("SELECT id, nombre FROM empresas WHERE usuario_id = ? AND activa = 1 ORDER BY nombre");
 $stmt_empresas->execute([$usuario_id]);
@@ -61,7 +82,6 @@ $stmt = $conn->prepare($sql);
 $stmt->execute($params);
 $empleados = $stmt->fetchAll();
 
-// Obtener estadísticas
 $stmt_stats = $conn->prepare("
     SELECT 
         COUNT(*) as total,
@@ -77,7 +97,7 @@ if ($empresa_id > 0) {
     $params_stats[] = $empresa_id;
 }
 $stmt_stats->execute($params_stats);
-$stats = $stmt_stats->fetch();
+$estadisticas_pagina = $stmt_stats->fetch();
 
 // Obtener distribución por tipo de contrato
 $stmt_contratos = $conn->prepare("
@@ -89,18 +109,6 @@ $stmt_contratos = $conn->prepare("
 ");
 $stmt_contratos->execute([$usuario_id]);
 $distribucion_contratos = $stmt_contratos->fetchAll();
-
-// Obtener estadísticas para el sidebar
-$stats = [
-    'empresas' => 0,
-    'empleados' => $stats['total'] ?? 0, // Usa el total que ya calculaste
-    'nominas_pendientes' => 0
-];
-
-// Obtener contador de empresas
-$stmt_empresas_count = $conn->prepare("SELECT COUNT(*) as total FROM empresas WHERE usuario_id = ?");
-$stmt_empresas_count->execute([$usuario_id]);
-$stats['empresas'] = $stmt_empresas_count->fetch()['total'];
 
 $paginaActual = 'empleados';
 $pageTitle = "Gestión de Empleados";
@@ -235,7 +243,7 @@ $pageTitle = "Gestión de Empleados";
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Total Empleados</p>
-                                <p class="text-2xl font-bold text-gray-900"><?php echo $stats['total'] ?? 0; ?></p>
+                                <p class="text-2xl font-bold text-gray-900"><?php echo $estadisticas_pagina['total'] ?? 0; ?></p>
                             </div>
                         </div>
                     </div>
@@ -247,7 +255,7 @@ $pageTitle = "Gestión de Empleados";
                             </div>
                             <div>
                                 <p class="text-sm text-gray-600">Empleados Activos</p>
-                                <p class="text-2xl font-bold text-gray-900"><?php echo $stats['activos'] ?? 0; ?></p>
+                                <p class="text-2xl font-bold text-gray-900"><?php echo $estadisticas_pagina['activos'] ?? 0; ?></p>
                             </div>
                         </div>
                     </div>
@@ -260,7 +268,7 @@ $pageTitle = "Gestión de Empleados";
                             <div>
                                 <p class="text-sm text-gray-600">Salario Diario</p>
                                 <p class="text-2xl font-bold text-gray-900">
-                                    $<?php echo number_format($stats['total_nomina_diaria'] ?? 0, 2); ?>
+                                    $<?php echo number_format($estadisticas_pagina['total_nomina_diaria'] ?? 0, 2); ?>
                                 </p>
                             </div>
                         </div>
@@ -274,7 +282,7 @@ $pageTitle = "Gestión de Empleados";
                             <div>
                                 <p class="text-sm text-gray-600">Promedio Salario</p>
                                 <p class="text-2xl font-bold text-gray-900">
-                                    $<?php echo number_format($stats['promedio_salario'] ?? 0, 2); ?>
+                                    $<?php echo number_format($estadisticas_pagina['promedio_salario'] ?? 0, 2); ?>
                                 </p>
                             </div>
                         </div>

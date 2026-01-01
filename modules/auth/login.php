@@ -53,6 +53,8 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
+
+    <link rel="icon" href="<?php echo BASE_URL; ?>favicon.ico" type="image/x-icon">
     
     <!-- Meta tags para prevenir caché en el navegador -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">

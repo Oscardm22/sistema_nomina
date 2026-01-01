@@ -85,6 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Sistema de Nómina</title>
     
+    <link rel="icon" href="<?php echo BASE_URL; ?>favicon.ico" type="image/x-icon">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     

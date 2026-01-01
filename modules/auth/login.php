@@ -55,7 +55,6 @@ $pageTitle = "Iniciar Sesión - Sistema de Nómina";
     <title><?php echo $pageTitle; ?></title>
 
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" type="image/x-icon">
-
     
     <!-- Meta tags para prevenir caché en el navegador -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">

@@ -97,7 +97,7 @@ $pageTitle = "Agregar Empresa";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?> - Sistema de Nómina</title>
     
-    <link rel="icon" href="<?php echo BASE_URL; ?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" type="image/x-icon">
     
     <!-- Tailwind CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">

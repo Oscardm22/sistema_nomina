@@ -188,6 +188,8 @@ $pageTitle = "Dashboard";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?> - Sistema de Nómina</title>
     
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" type="image/x-icon">
+
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/tailwind-output.css">
     
@@ -219,7 +221,7 @@ $pageTitle = "Dashboard";
                             <i class="fas fa-chevron-down text-sm transition-transform duration-200" id="chevronIcon"></i>
                         </button>
                         
-                        <!-- Menú desplegable (solo Cerrar Sesión) -->
+                        <!-- Menú desplegable -->
                         <div class="user-dropdown" id="userDropdown">
                             <a href="<?php echo BASE_URL; ?>modules/auth/logout.php" 
                                class="flex items-center px-4 py-3 hover:bg-gray-100 text-gray-800">

@@ -235,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña - Sistema de Nómina</title>
     
-    <link rel="icon" href="<?php echo BASE_URL; ?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon/favicon.ico" type="image/x-icon">
     
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/tailwind-output.css">
